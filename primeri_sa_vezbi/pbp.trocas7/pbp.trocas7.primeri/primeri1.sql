@@ -1,0 +1,31 @@
+-- CREATE VIEW Syntax
+
+USE vezbe;
+
+CREATE OR REPLACE VIEW v_today (
+    today
+) AS SELECT CURRENT_DATE;
+
+SELECT * FROM v_today;
+
+DROP TABLE IF EXISTS t;
+
+CREATE TABLE t (
+    qty INT,
+    price INT
+);
+
+CREATE OR REPLACE VIEW v
+AS SELECT * FROM t;
+
+INSERT INTO t VALUES
+    (3, 50);
+
+SELECT * FROM v;
+
+CREATE OR REPLACE VIEW v
+AS SELECT qty, price, qty * price AS value FROM t;
+
+SELECT * FROM v;
+
+

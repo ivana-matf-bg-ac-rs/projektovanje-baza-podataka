@@ -1,0 +1,56 @@
+Zadatak 4. Odrediti ključeve relacije R, a zatim i transformisati postupno relaciju R tako da bude u 2NF, pa u 3NF i na kraju u BCNF.
+
+R(id_pozorista, naziv, adresa, broj_telefona, ime_predstave, sifra_predstave, reditelj, zanr)
+
+F = {
+(FZ1) id_pozorista → naziv, adresa, broj_telefona
+(FZ2) broj_telefona → adresa
+(FZ3) id_pozorista, sifra_predstave → reditelj, zanr, ime_predstave
+(FZ4) ime_predstave → sifra_predstave
+}
+
+Rešenje 4.
+
+{id_pozorista}+ = {id_pozorista, naziv, adresa, broj_telefona}
+{naziv}+ = {naziv}
+{adresa}+ = {adresa}
+{broj_telefona}+ = {broj_telefona, adresa}
+{ime_predstave}+ = {ime_predstave, sifra_predstave}
+{sifra_predstave}+ = {sifra_predstave}
+{reditelj}+ = {reditelj}
+{zanr}+ = {zanr}
+
+{id_pozorista, sifra_predstave}+ = {id_pozorista, sifra_predstave, reditelj, zanr, ime_predstave, naziv, adresa, broj_telefona} - kandidat za kljuc
+
+Relacije nije u 2NF posto postoji parcijalna FZ FZ1.
+
+Oslobadjamo se FZ1:
+R1(id_pozorista, naziv, adresa, broj_telefona)
+R2(id_pozorista, ime_predstave, sifra_predstave, reditelj, zanr)
+R = R1 x R2
+
+Relacija R = R1 x R2 je u 2NF.
+
+Relacija nije u 3NF zato sto postoji tranzitivna FZ preko nekljucnog atibuta u nekljucni atribut, a to je FZ2.
+
+Odlobadjamo se FZ2:
+R3(broj_telefona, adresa)
+R4(id_pozorista, naziv, broj_telefona)
+R1 = R3 x R4
+
+Relacija R = R3 x R4 X R2 je sada u 3NF.
+
+Relacija nije u BCNF posto postoje dodatne FZ koje ne zavise od celog kljuca.
+
+Oslobadjamo se FZ4:
+R5(ime_predstave, sifra_predstave)
+R6(id_pozorista, ime_predstave, reditelj, zanr)
+R2 = R5 x R6
+
+Relacija R = R3 x R4 x R5 x R6 je u BCNF.
+
+
+
+
+
+

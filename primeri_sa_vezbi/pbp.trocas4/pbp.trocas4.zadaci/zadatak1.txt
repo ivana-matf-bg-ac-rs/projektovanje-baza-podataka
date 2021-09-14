@@ -1,0 +1,58 @@
+Zadatak 1.  Odrediti ključeve relacije R, a zatim i transformisati postupno relaciju R tako da bude u 2NF, pa u 3NF i na kraju u BCNF.
+
+R(id_pacijenta, ime, prezime, ptt, naziv_mesta, adresa, datum, sifra_zahvata, naziv_zahvata, sifra_zuba, iznos_racuna)
+
+F = {
+(FZ1) id_pacijenta → ime, prezime, ptt, naziv_mesta, adresa
+(FZ2) ptt → naziv_mesta
+(FZ3) id_pacijenta, datum → sifra_zahvata, naziv_zahvata, sifra_zuba, iznos_racuna
+(FZ4) sifra_zahvata → naziv_zahvata
+}
+
+
+Rešenje 1.
+
+{id_pacijenta}+ = {id_pacijenta, ime, prezime, ptt, naziv_mesta, adresa, naziv_mesta}
+{ptt}+ = {ptt, naziv_mesta}
+{sifra_zahvata}+ = {sifra_zahvata, naziv_zahvata}
+{ime}+ = {ime}
+{prezime}+ = {prezime}
+{naziv_mesta}+ = {naziv_mesta}
+{adresa}+ = {adresa}
+{datum}+ = {datum}
+{naziv_zahvata}+ = {naziv_zahvata}
+{sifra_zuba}+ = {sifra_zuba}
+{iznos_racuna}+ = {iznos_racuna}
+
+{id_pacijenta, datum}+ = {id_pacijenta, datum, sifra_zahvata, naziv_zahvata, sifra_zuba, iznos_racuna, ime, prezime, ptt, naziv_mesta, adresa} - kandidat za kljuc
+
+Relacija nije u 2NF zbog FZ1.
+
+Oslobadjamo se FZ1:
+R1(id_pacijenta, ime, prezime, ptt, naziv_mesta, adresa)
+R2(id_pacijenta, datum, sifra_zahvata, naziv_zahvata, sifra_zuba, iznos_racuna)
+R = R1 x R2
+
+Relacija je u 2NF.
+
+Relacija nije u 3NF zbog FZ2 i FZ4.
+
+Oslobadjamo se FZ2:
+R3(ptt, naziv_mesta)
+R4(id_pacijenta, ime, prezime, ptt, adresa)
+R1 = R3 x R4
+
+Oslobadjamo se FZ4:
+R5(sifra_zahvata naziv_zahvata)
+R6(id_pacijenta, datum, sifra_zahvata, sifra_zuba, iznos_racuna)
+R2 = R5 x R6
+
+Relacija R = R3 x R4 x R5 x R6 jeste u 3NF.
+
+Posto nema dodatnih zavisnosti koje ne poticu od celog kljuca relacija je i u BCNF.
+
+
+
+
+
+

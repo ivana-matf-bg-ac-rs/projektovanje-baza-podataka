@@ -1,0 +1,77 @@
+Zadatak 5. Odrediti ključeve relacije R, a zatim i transformisati postupno relaciju R tako da bude u 2NF, pa u 3NF i na kraju u BCNF.
+
+R(id_sektora, sredstva_sektor, id_rukovodioca, id_radnika, id_projekta, id_kancelarije, broj_telefona, naziv_posla, sifra_posla, datum_primanja, iznos_primanja, sredstva_projekat, povrsina_kancelarije)
+
+F = {
+(FZ1) id_sektora → sredstva_sektor, id_rukovodioca
+(FZ2) id_radnika → id_sektora, id_projekta, id_kancelarije, broj_telefona
+(FZ3) id_radnika, naziv_posla, datum_primanja → iznos_primanja, sifra_posla
+(FZ4) id_projekta → sredstva_projekat
+(FZ5) id_kancelarije → povrsina_kancelarije
+(FZ6) sifra_posla →  naziv_posla
+}
+
+Rešenje 5.
+
+{id_sektora}+ = {id_sektora, sredstva_sektor, id_rukovodioca}
+{sredstva_sektor}+ = {sredstva_sektor}
+{id_rukovodioca}+ = {id_rukovodioca}
+{id_radnika}+ = {id_radnika, id_sektora, id_projekta, id_kancelarije, broj_telefona, sredstva_sektor, id_rukovodioca, sredstva_projekat, povrsina_kancelarije}
+{id_projekta}+ = {id_projekta, sredstva_projekat}
+{id_kancelarije}+ = {id_kancelarije, povrsina_kancelarije}
+{broj_telefona}+ = {broj_telefona}
+{naziv_posla}+ = {naziv_posla}
+{sifra_posla}+ = {sifra_posla, naziv_posla}
+{datum_primanja}+ = {datum_primanja}
+{iznos_primanja}+ = {iznos_primanja}
+{sredstva_projekat}+ = {sredstva_projekat}
+{povrsina_kancelarije}+ = {povrsina_kancelarije}
+
+{id_radnika, naziv_posla, datum_primanja}+ = {id_radnika, naziv_posla, datum_primanja, iznos_primanja, sifra_posla, id_radnika, id_sektora, id_projekta, id_kancelarije, broj_telefona, sredstva_sektor, id_rukovodioca, sredstva_projekat, povrsina_kancelarije} - kandidat za kljuc
+{id_radnika, sifra_posla, datum_primanja}+ = {id_radnika, naziv_posla, datum_primanja, iznos_primanja, sifra_posla, id_radnika, id_sektora, id_projekta, id_kancelarije, broj_telefona, sredstva_sektor, id_rukovodioca, sredstva_projekat, povrsina_kancelarije} - kandidat za kljuc
+
+Kandidati za kljuc su {id_radnika, naziv_posla, datum_primanja} i {id_radnika, sifra_posla, datum_primanja}
+
+Relacija nije u 2NF posto postoji parcijalna FZ FZ2. Kako FZ2 sa desne strane ima atribute koji su u drugim FZ1, FZ4 i FZ5 sa leve strane, to prvo moramo da se oslobodimo FZ1, FZ4 i FZ5 kako ne bismo izgubili informaciju o njima.
+
+Oslobadjamo se FZ1:
+R1(id_sektora, sredstva_sektor, id_rukovodioca)
+R2(id_sektora, id_radnika, id_projekta, id_kancelarije, broj_telefona, naziv_posla, sifra_posla, datum_primanja, iznos_primanja, sredstva_projekat, povrsina_kancelarije)
+R = R1 x R2
+
+Oslobadjamo se FZ4:
+R3(id_projekta, sredstva_projekat)
+R4(id_sektora, id_radnika, id_projekta, id_kancelarije, broj_telefona, naziv_posla, sifra_posla, datum_primanja, iznos_primanja, povrsina_kancelarije)
+R2 = R3 x R4
+
+Oslobadjamo se FZ5:
+R5(id_kancelarije, povrsina_kancelarije)
+R6(id_sektora, id_radnika, id_projekta, id_kancelarije, broj_telefona, naziv_posla, sifra_posla, datum_primanja, iznos_primanja)
+R4 = R5 x R6
+
+Oslobadjamo se FZ2:
+R7(id_radnika, id_sektora, id_projekta, id_kancelarije, broj_telefona)
+R8(id_radnika, naziv_posla, sifra_posla, datum_primanja, iznos_primanja)
+R6 = R7 x R8
+
+Relacija R = R1 x R3 x R5 x R7 x R8 je u 2NF.
+
+Kako nema FZ preko nekljucnog atributa u nekljucne atribute, relacija je i u 3NF.
+
+Postoje dodatne tranzitivne zavisnosti u kljucne atribute, tako da relacija nije u BCNF.
+
+Oslobadjamo se FZ6:
+R9(sifra_posla, naziv_posla)
+R10(id_radnika, sifra_posla, datum_primanja, iznos_primanja)
+R8 = R9 x R10
+
+Relacija R = R1 x R3 x R5 x R7 x R9 x R10 je u BCNF.
+
+
+
+
+
+
+
+
+

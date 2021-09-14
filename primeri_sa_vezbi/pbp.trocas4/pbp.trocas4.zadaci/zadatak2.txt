@@ -1,0 +1,54 @@
+Zadatak 2. Odrediti ključeve relacije R, a zatim i transformisati postupno relaciju R tako da bude u 2NF, pa u 3NF i na kraju u BCNF.
+
+R(sifra_zivotinje, ime, vrsta, datum_rođenja, mesto, datum_dolaska, datum_odlaska, zaduzena_osoba, komentar, proizvod, alternativni_proizvod)
+
+F = {
+(FZ1) sifra_zivotinje → ime, vrsta, datum_rođenja
+(FZ2) sifra_zivotinje, mesto, datum_dolaska → datum_odlaska, zaduzena_osoba, komentar
+(FZ3) proizvod → alternativni_proizvod
+}
+
+Rešenje 2.
+
+{sifra_zivotinje}+ = {sifra_zivotinje, ime, vrsta, datum_rođenja}
+{ime}+ = {ime}
+{vrsta}+ = {vrsta}
+{datum_rođenja}+ = {datum_rođenja}
+{mesto}+ = {mesto}
+{datum_dolaska}+ = {datum_dolaska}
+{datum_odlaska}+ = {datum_odlaska}
+{zaduzena_osoba}+ = {zaduzena_osoba}
+{komentar}+ = {komentar}
+{proizvod}+ = {proizvod, alternativni_proizvod}
+{alternativni_proizvod}+ = {alternativni_proizvod}
+
+{sifra_zivotinje, mesto, datum_dolaska}+ = {sifra_zivotinje, ime, vrsta, datum_rođenja, mesto, datum_dolaska, datum_odlaska, zaduzena_osoba, komentar}
+
+{sifra_zivotinje, mesto, datum_dolaska, prozivod}+ = {sifra_zivotinje, ime, vrsta, datum_rođenja, mesto, datum_dolaska, datum_odlaska, zaduzena_osoba, komentar, proizvod, alternativni_proizvod}
+
+Relacija nije u 2NF zbog parcijalnih FZ FZ1, FZ2 i FZ3.
+
+Oslobadjamo se FZ1:
+R1(sifra_zivotinje, ime, vrsta, datum_rođenja)
+R2(sifra_zivotinje, mesto, datum_dolaska, datum_odlaska, zaduzena_osoba, komentar, proizvod, alternativni_proizvod)
+R = R1 x R2
+
+Oslobadjamo se FZ2:
+R3(sifra_zivotinje, mesto, datum_dolaska, datum_odlaska, zaduzena_osoba, komentar)
+R4(sifra_zivotinje, mesto, datum_dolaska, proizvod, alternativni_proizvod)
+R2 = R3 x R4
+
+Oslobadjamo se FZ3:
+R5(proizvod, alternativni_proizvod)
+R6(sifra_zivotinje, mesto, datum_dolaska, proizvod)
+R4 = R5 x R6
+
+Relacija R = R1 x R3 x R5 x R6 je u 2NF.
+
+Posto nema dodatnih zavisnosti koje ne poticu od celog kljuca, ona je i u 3NF i BCNF.
+
+
+
+
+
+

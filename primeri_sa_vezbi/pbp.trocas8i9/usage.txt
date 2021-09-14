@@ -1,0 +1,39 @@
+# Resoures: 
+
+* Docker (get started): https://www.docker.com/
+
+* IBM Docker Image: https://hub.docker.com/r/ibmcom/db2
+
+* docker pull ibmcom/db2
+
+# Usage:
+
+* sudo docker run -itd --name mydb2 --privileged=true -p 50000:50000 -e LICENSE=accept -e DB2INSTANCE=ivanadb -e DB2INST1_PASSWORD=ivana -v /home/ivana/docker/db2:/database -v /home/ivana/Desktop/zadaci:/zadaci ibmcom/db2	
+
+* export PATH=$PATH:/opt/ibm/db2/V11.5/bin/
+
+* docker ps -a
+
+* sudo docker exec -ti mydb2 bash -c "su - ivanadb"
+
+* db2 list db directory (izlistam bazu)
+
+* db2start
+
+* db2 create database mstud
+
+* db2 connect to mstud 
+
+* db2 select schemaname from syscat.schemata (listam sheme)
+
+* db2 list tables for schema da (db, izlista sve tabele za schemu)
+
+* db2 connect reset
+
+* db2stop
+
+* docker container ls (docker image ls)
+
+* docker stop HASH
+* docker rm HASH
+

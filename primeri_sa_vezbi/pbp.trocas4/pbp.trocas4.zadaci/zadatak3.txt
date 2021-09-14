@@ -1,0 +1,52 @@
+Zadatak 3. Odrediti ključeve relacije R, a zatim i transformisati postupno relaciju R tako da bude u 2NF, pa u 3NF i na kraju u BCNF.
+
+R(BrojRacuna, RBTrans, Stanje, Status, SifraKlijenta, ImeKlijenta, Datum, Iznos, VrstaTrans, NazivVrsteTrans)
+
+F = {
+(FZ1) BrojRacuna, RBTrans → Stanje, Status, SifraKlijenta, ImeKlijenta, Datum, Iznos, VrstaTrans, NazivVrsteTrans
+(FZ2) BrojRacuna → Stanje, Status, SifraKlijenta, ImeKlijenta
+(FZ3) SifraKlijenta → ImeKlijenta
+(FZ4) VrstaTrans → NazivVrsteTrans
+}
+
+Rešenje 3.
+
+{BrojRacuna}+ = {BrojRacuna, Stanje, Status, SifraKlijenta, ImeKlijenta}
+{RBTrans}+ = {RBTrans}
+{Stanje}+ = {Stanje}
+{Status}+ = {Status}
+{SifraKlijenta}+ = {SifraKlijenta, ImeKlijenta}
+{Datum}+ = {Datum}
+{Iznos}+ = {Iznos}
+{VrstaTrans}+ = {VrstaTrans, NazivVrsteTrans}
+{NazivVrsteTrans}+ = {NazivVrsteTrans}
+
+{BrojRacuna, RBTrans}+ = {BrojRacuna, RBTrans, Stanje, Status, SifraKlijenta, ImeKlijenta, Datum, Iznos, VrstaTrans, NazivVrsteTrans} - kandidat za kljuc
+
+Relacija nije u 2NF jer postoji parcijalna FZ a to je FZ2.
+
+Oslobadjamo se FZ2:
+R1(BrojRacuna, Stanje, Status, SifraKlijenta, ImeKlijenta)
+R2(BrojRacuna, RBTrans, Datum, Iznos, VrstaTrans, NazivVrsteTrans)
+R = R1 x R2
+
+Relacija R = R1 x R2 je u 2NF.
+
+Relacija nije u 3NF jer postoji tranzitivna zavisnost nekljucnog atributa preko nekljucnog atributa FZ3 i FZ4.
+
+Oslobadjamo se FZ3:
+R3(SifraKlijenta, ImeKlijenta)
+R4(BrojRacuna, Stanje, Status, SifraKlijenta)
+R1 = R3 x R4
+
+Oslobadjamo se FZ4:
+R5(VrstaTrans, NazivVrsteTrans)
+R6(BrojRacuna, RBTrans, Datum, Iznos, VrstaTrans)
+R2 = R5 x R6
+
+Relacija R = R3 x R4 x R5 x R6 je u 3NF.
+
+Kako nema dodatnih tranzitivnih FZ relacije je i u BCNF.
+
+
+
